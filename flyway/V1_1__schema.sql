@@ -57,7 +57,7 @@ CREATE TABLE exif
   CONSTRAINT exif_directory FOREIGN KEY (directory_id)
       REFERENCES directory (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT exif_jpeg FOREIGN KEY (directory_id)
+  CONSTRAINT exif_jpeg FOREIGN KEY (jpeg_id)
       REFERENCES jpeg (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT exif_jpeg_id_directory_id_tagtype_key UNIQUE (jpeg_id, directory_id, tagtype)
