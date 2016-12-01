@@ -8,30 +8,32 @@ import slick.jdbc.PostgresProfile.api.Database
 
 import scala.concurrent.ExecutionContextExecutor
 
-object Service{
-  val waldo=ServiceConfig.waldo
-  val hostPort=ServiceConfig.hostPort
-  trait HasDatabase{
-    def database():Database=ServiceConfig.database
+object Service {
+  val waldo = ServiceConfig.waldo
+  val hostPort = ServiceConfig.hostPort
+
+  trait HasDatabase {
+    def database(): Database = ServiceConfig.database
   }
 
-  trait HasExecutor{
-    implicit val executor=scala.concurrent.ExecutionContext.Implicits.global
+  trait HasExecutor {
+    implicit val executor = scala.concurrent.ExecutionContext.Implicits.global
   }
+
 }
 
-private[service] object ServiceConfig{
+private[service] object ServiceConfig {
   val config: Config = ConfigFactory.load()
-  val database:Database=Database.forConfig("dbpg")
-  val waldo=config.getString("api.waldo")
-  val host=config.getString("api.host")
-  val port=config.getInt("api.port")
-  val hostPort=(host,port)
+  val database: Database = Database.forConfig("dbpg")
+  val waldo = config.getString("api.waldo")
+  val host = config.getString("api.host")
+  val port = config.getInt("api.port")
+  val hostPort = (host, port)
 
 
   implicit val system: ActorSystem = ActorSystem()
   val executor: ExecutionContextExecutor = system.dispatcher
-  val materializer: Materializer={
+  val materializer: Materializer = {
     val decider: Supervision.Decider = {
       case _: Exception => Supervision.Resume
       case e: Throwable => {
@@ -44,7 +46,7 @@ private[service] object ServiceConfig{
         Supervision.Stop
       }
     }
-    val settings=ActorMaterializerSettings(system).withSupervisionStrategy(decider)
+    val settings = ActorMaterializerSettings(system).withSupervisionStrategy(decider)
     ActorMaterializer(settings)
   }
 }

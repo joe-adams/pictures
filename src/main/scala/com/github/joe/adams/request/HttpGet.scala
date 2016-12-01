@@ -37,9 +37,9 @@ private[request] trait HttpGetImpl[R] extends HttpGetWithMethods[R] with AkkaSer
 object HttpGet {
   type Mapper[R] = (HttpResponse => Future[R])
 
-  private def getter[R](): HttpGetImpl[R] = new HttpGetImpl[R] {}
-
   def apply[R](url: String, mapper: Mapper[R]): Future[R] = getter[R]()(url, mapper)
+
+  private def getter[R](): HttpGetImpl[R] = new HttpGetImpl[R] {}
 
   //def waldoPic(string: String)= waldo + "/" + string
 

@@ -3,7 +3,7 @@ package com.github.joe.adams.steps.readimages
 import com.github.joe.adams.db.DbService._
 import org.scalatest.FunSuite
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 class GetMetaDataTest extends FunSuite {

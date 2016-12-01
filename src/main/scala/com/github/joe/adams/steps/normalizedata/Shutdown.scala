@@ -7,17 +7,19 @@ import com.github.joe.adams.service.Service.HasExecutor
 
 import scala.concurrent.Future
 
-private [normalizedata] object Shutdown {
-
-  object Impl extends Shutdown
+private[normalizedata] object Shutdown {
 
   def apply(): Future[Unit] = Impl()
+
+  object Impl extends Shutdown
 }
 
-private [normalizedata] trait Shutdown extends (()=>Future[Unit])  with HasExecutor{
+private[normalizedata] trait Shutdown extends (() => Future[Unit]) with HasExecutor {
 
-  def dbshutdown(): Future[Unit] =DbService().shutdown()
-  def shutdownAkka(): Future[Terminated]=AkkaService.shutdownAkka()
-  override def apply():Future[Unit]=Future.sequence(Seq(dbshutdown(),shutdownAkka())).map(s=>Unit)
+  override def apply(): Future[Unit] = Future.sequence(Seq(dbshutdown(), shutdownAkka())).map(s => Unit)
+
+  def dbshutdown(): Future[Unit] = DbService().shutdown()
+
+  def shutdownAkka(): Future[Terminated] = AkkaService.shutdownAkka()
 
 }
