@@ -18,5 +18,19 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % akkaHttpV withSources() withJavadoc(),
   "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpV withSources() withJavadoc(),
   "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpV withSources() withJavadoc(),
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test" withSources() withJavadoc()
+  "org.scalatest" %% "scalatest" % "3.0.1" % "test" withSources() withJavadoc(),
+  "org.postgresql" % "postgresql" % "9.4.1212.jre7"
 )
+
+flywayUrl := "jdbc:postgresql://localhost:5432/postgres"
+
+flywayUser := "waldo"
+
+flywayPassword := "waldo"
+
+flywayLocations := Seq("filesystem:flyway")
+
+
+
+
+
